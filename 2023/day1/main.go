@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
+	"strings"
 	"unicode"
 
 	"github.com/paolofacchinetti/adventofcode-go/utils"
@@ -14,8 +16,18 @@ func main() {
 		panic(err)
 	}
 
-	scanner := bufio.NewScanner(file)
+	part1Calc(file)
 
+	file, err = utils.ReadInput()
+	if err != nil {
+		panic(err)
+	}
+
+	part2Calc(file)
+}
+
+func part1Calc(file *os.File) {
+	scanner := bufio.NewScanner(file)
 	sum := 0
 
 	// iterate over text lines
@@ -34,7 +46,111 @@ func main() {
 			}
 		}
 		sum += lastDigit
-		fmt.Println(sum)
 	}
-	fmt.Printf("the total sum of all calibration values is %d\n", sum)
+	fmt.Printf("Part 1: the total sum of all calibration values is %d\n", sum)
 }
+
+func part2Calc(file *os.File) {
+	scanner := bufio.NewScanner(file)
+	sum := 0
+
+	// iterate over text lines
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		// map[index]number
+		m := make(map[int]int)
+
+		// index spelled out numbers
+		indexSpelledOutNums(line, m)
+
+		// index digits
+		indexDigits(line, m)
+
+		// get first digit
+		for i := 0; i < len(line); i++ {
+			if num, ok := m[i]; ok {
+				sum += num * 10
+				break
+			}
+		}
+
+		for i := len(line) - 1; i >= 0; i-- {
+			if num, ok := m[i]; ok {
+				sum += num
+				break
+			}
+		}
+
+	}
+	fmt.Printf("Part 2: the total sum of all calibration values is %d\n", sum)
+}
+
+func indexDigits(line string, m map[int]int) {
+	for pos, char := range line {
+		if unicode.IsDigit(char) {
+			m[pos] = int(char - '0')
+		}
+	}
+}
+
+func indexSpelledOutNums(line string, m map[int]int) {
+	if i := strings.Index(line, "one"); i >= 0 {
+		m[i] = 1
+	}
+	if i := strings.LastIndex(line, "one"); i >= 0 {
+		m[i] = 1
+	}
+	if i := strings.Index(line, "two"); i >= 0 {
+		m[i] = 2
+	}
+	if i := strings.LastIndex(line, "two"); i >= 0 {
+		m[i] = 2
+	}
+	if i := strings.Index(line, "three"); i >= 0 {
+		m[i] = 3
+	}
+	if i := strings.LastIndex(line, "three"); i >= 0 {
+		m[i] = 3
+	}
+	if i := strings.Index(line, "four"); i >= 0 {
+		m[i] = 4
+	}
+	if i := strings.LastIndex(line, "four"); i >= 0 {
+		m[i] = 4
+	}
+	if i := strings.Index(line, "five"); i >= 0 {
+		m[i] = 5
+	}
+	if i := strings.LastIndex(line, "five"); i >= 0 {
+		m[i] = 5
+	}
+	if i := strings.Index(line, "six"); i >= 0 {
+		m[i] = 6
+	}
+	if i := strings.LastIndex(line, "six"); i >= 0 {
+		m[i] = 6
+	}
+	if i := strings.Index(line, "seven"); i >= 0 {
+		m[i] = 7
+	}
+	if i := strings.LastIndex(line, "seven"); i >= 0 {
+		m[i] = 7
+	}
+	if i := strings.Index(line, "eight"); i >= 0 {
+		m[i] = 8
+	}
+	if i := strings.LastIndex(line, "eight"); i >= 0 {
+		m[i] = 8
+	}
+	if i := strings.Index(line, "nine"); i >= 0 {
+		m[i] = 9
+	}
+	if i := strings.LastIndex(line, "nine"); i >= 0 {
+		m[i] = 9
+	}
+}
+
+// 1. look for "one", "two",... and keep track of indexes of last digit
+// 2. look for digits and keep track of indexes
+// 3. find first and last, eventually convert to int and sum
