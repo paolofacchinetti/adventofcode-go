@@ -75,13 +75,13 @@ func part2Calc(file *os.File) {
 			}
 		}
 
+		// get last digit
 		for i := len(line) - 1; i >= 0; i-- {
 			if num, ok := m[i]; ok {
 				sum += num
 				break
 			}
 		}
-
 	}
 	fmt.Printf("Part 2: the total sum of all calibration values is %d\n", sum)
 }
@@ -150,7 +150,3 @@ func indexSpelledOutNums(line string, m map[int]int) {
 		m[i] = 9
 	}
 }
-
-// 1. look for "one", "two",... and keep track of indexes of last digit
-// 2. look for digits and keep track of indexes
-// 3. find first and last, eventually convert to int and sum
