@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	file, err := utils.ReadInput()
+	file, err := utils.ReadInputAsFile()
 	if err != nil {
 		panic(err)
 	}
 
 	part1Calc(file)
 
-	file, err = utils.ReadInput()
+	file, err = utils.ReadInputAsFile()
 	if err != nil {
 		panic(err)
 	}

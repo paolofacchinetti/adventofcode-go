@@ -17,7 +17,7 @@ func main() {
 	/*
 		Part 1
 	*/
-	file, err := utils.ReadInput()
+	file, err := utils.ReadInputAsFile()
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func main() {
 	/*
 		Part 2
 	*/
-	file, err = utils.ReadInput()
+	file, err = utils.ReadInputAsFile()
 	if err != nil {
 		panic(err)
 	}
